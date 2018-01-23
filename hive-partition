@@ -1,0 +1,24 @@
+
+CREATE TABLE orders (
+order_id int,
+order_date string,
+order_customer_id int,
+order_status string
+)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY '|'
+STORED AS TEXTFILE;
+
+LOAD DATA LOCAL INPATH '/home/jagadeesh27/data/retail_db/orders/part-00000' INTO TABLE orders;
+
+
+
+
+create table parti_Orders ( order_id int, order_date string, order_customer_id int, order_status string)
+PARTITIONED BY (order_month string)
+row format delimited fields terminated by ','
+stored as textfile;
+
+INSERT OVERWRITE TABLE parti_orders partition(order_month) 
+SELECT order_id, order_date, order_customer_id, order_status, 
+substr(order_date, 1, 7) order_month from orders;
+
