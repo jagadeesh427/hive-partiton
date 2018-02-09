@@ -1,0 +1,11 @@
+
+
+GROUP BY:
+
+select order_status, count(*) from orders group by order_status;
+
+
+
+
+
+
